@@ -1,0 +1,29 @@
+{
+  "name": "narani-team-mcp",
+  "version": "1.0.0",
+  "description": "Narani 팀 협업 MCP — 앱 없이 .narani 컨셉 그래프·피드 도구만. 어떤 MCP 클라이언트에서나.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "server.js",
+  "bin": {
+    "narani-team-mcp": "server.js"
+  },
+  "files": [
+    "server.js",
+    "lib/"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^4.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "narani",
+    "concept-graph",
+    "agent",
+    "team"
+  ]
+}
