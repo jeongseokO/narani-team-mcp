@@ -1,16 +1,33 @@
 # narani-team-mcp
 
-Narani 앱 없이도, 팀이 공유하는 **`.narani` 협업 메모리**(컨셉 그래프 + 작업 피드)를 어떤 MCP 클라이언트에서나 쓰게 해주는 스탠드얼론 MCP 서버입니다.
+Narani 앱 없이도, 팀이 공유하는 **`.narani` 협업 메모리**(컨셉 그래프 + 작업 로그)와 **코드 내비게이션**을 어떤 MCP 클라이언트에서나 쓰게 해주는 스탠드얼론 MCP 서버입니다.
 
-앱 전체를 깔 필요 없이, 팀원이 자기 Claude·Codex·Gemini에 이 작은 서버만 연결하면 같은 `.narani/`를 읽고 씁니다. (git으로 동기화되는 그 폴더 그대로)
+앱 전체를 깔 필요 없이, 팀원이 자기 Claude·Codex·Gemini에 이 작은 서버만 연결하면 같은 `.narani/`를 읽고 씁니다. (git으로 동기화되는 그 폴더 그대로) 모든 처리는 로컬에서 일어나며 외부로 전송하지 않습니다.
 
-## 노출 도구 (team 전용)
+## 노출 도구
 
-읽기 — `orient` · `graph_search` · `graph_get_node` · `graph_read` · `feed_read`
-쓰기 — `graph_upsert_node` · `graph_link` · `feed_write`
+도구 이름은 "동사_대상"이라, 에이전트가 무엇을 했는지 이름만 봐도 짐작됩니다. 모든 검색은 **매칭된 부분만** 돌려줘 토큰을 아낍니다.
 
-모두 프로젝트의 `.narani/`(graph.json · feed/)만 다룹니다. 그래프 엔진이나 앱 없이 동작합니다.
-※ 앱 성격의 코드 인덱스(`code_*`)는 **의도적으로 빠져 있습니다** — 이 패키지는 팀 협업 도구만 담습니다.
+**컨셉 그래프 (team)**
+- `get_context` — 시작 시 맥락 한 번에(상위 컨셉 + 최근 작업 + 규칙)
+- `search_concepts` — 키워드로 노드 검색(다중어 AND·관련도순·스니펫)
+- `read_concept` — 노드 하나 전체 펼치기
+- `list_concepts` — 그래프 개요(계층별 개수·제목)
+- `save_concept` / `link_concepts` — 노드 생성·갱신 / 관계 잇기·끊기
+
+**팀 작업 로그 (team)**
+- `read_team_log` — 최근 작업 기록
+- `search_team_log` — 누가/무엇을/어느 파일을 건드렸는지 검색(query·file·author·nodeId)
+- `post_team_update` — 이번 작업 요약 남기기
+
+**코드 내비게이션 (code · 순수 Node, 설치 0)**
+- `find_symbol` — 함수·클래스·타입 위치 찾기
+- `outline_file` — 한 파일의 구조(정의·import)
+- `find_references` — 식별자 정의·참조 전부
+- `list_code_files` — 인덱싱된 소스 파일 목록
+
+`.narani/`(graph.json · feed/)와 소스 파일만 로컬에서 다룹니다. 그래프 엔진이나 앱 없이 동작합니다.
+※ 터미널·SSH·OAuth·마켓 설치 같은 Electron 전용 기능은 애초에 MCP 도구가 아니라 포함되지 않습니다.
 
 ## 설치 — 터미널 한 줄 (권장)
 
