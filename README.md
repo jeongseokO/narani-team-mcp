@@ -73,6 +73,38 @@ git push -u origin main
 
 쓰기 도구를 빼고 읽기만 노출하려면 `NARANI_CAN_WRITE=0` 을 환경변수로 주세요.
 
+## 문제 해결
+
+**도구가 안 보이거나 `/usr/bin/env: 'node': No such file or directory` 가 떠요**
+클라이언트(특히 컨테이너·비대화형 환경)가 PATH 에서 Node 를 못 찾는 경우예요. 두 가지 방법 중 하나로 해결합니다.
+
+1) 명령을 **절대경로**로 주고 PATH 를 넘겨준다 (`which npx` 로 경로 확인):
+```toml
+[mcp_servers.narani-team]
+command = "/abs/path/to/npx"           # which npx
+args = ["-y", "github:jeongseokO/narani-team-mcp"]
+env = { PATH = "/abs/path/to/node/bin:/usr/bin:/bin" }
+```
+
+2) **한 번 글로벌 설치** 후 node 로 직접 실행 (가장 견고 — 매번 GitHub 를 받지 않아 빠르고 셰뱅/PATH 에 안 흔들림):
+```bash
+npm i -g github:jeongseokO/narani-team-mcp
+```
+```toml
+[mcp_servers.narani-team]
+command = "/abs/path/to/node"
+args = ["/abs/path/to/lib/node_modules/narani-team-mcp/server.js"]
+```
+
+**설정을 바꿨는데 그대로예요** — MCP 서버는 세션 시작 때 한 번 떠요. 설정 변경 뒤에는 **클라이언트 세션을 새로 여세요**(실행 중 세션은 다시 읽지 않음).
+
+**`Auth: Unsupported` 가 떠요** — 정상입니다. 이 서버는 로그인이 필요 없는 로컬 stdio 서버라 `mcp login` 대상이 아니에요. 실패가 아닙니다.
+
+**잘 떴는지 확인** — 직접 한 줄 실행해서 에러 없이 멈춘 듯 입력 대기하면 정상입니다(stdio 서버):
+```bash
+npx -y github:jeongseokO/narani-team-mcp   # Ctrl+C 로 종료
+```
+
 ## 라이선스
 
 MIT
