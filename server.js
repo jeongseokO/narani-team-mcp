@@ -16,14 +16,14 @@
  */
 const { McpServer } = require('@modelcontextprotocol/sdk/server/mcp.js');
 const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
-const { toolDefs } = require('./lib/narani-tooldefs');
+const { toolDefs, INSTRUCTIONS } = require('./lib/narani-tooldefs');
 
 function out(obj) { return { content: [{ type: 'text', text: typeof obj === 'string' ? obj : JSON.stringify(obj, null, 2) }] }; }
 
 async function main() {
   const dir = process.env.NARANI_PROJECT_DIR || process.cwd();
   const canWrite = process.env.NARANI_CAN_WRITE !== '0';
-  const server = new McpServer({ name: 'narani-team', version: require('./package.json').version });
+  const server = new McpServer({ name: 'narani-team', version: require('./package.json').version }, { instructions: INSTRUCTIONS });
   for (const d of toolDefs(dir, { canWrite, groups: ['team', 'code'] })) {
     server.tool(d.name, d.description, d.schema, async (args) => out(await d.handler(args)));
   }
