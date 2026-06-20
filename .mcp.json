@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "narani-team": {
+      "command": "npx",
+      "args": ["-y", "github:jeongseokO/narani-team-mcp"]
+    }
+  }
+}

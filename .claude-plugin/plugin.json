@@ -1,0 +1,13 @@
+{
+  "name": "narani-team",
+  "description": "Narani 팀 협업 MCP — .narani 컨셉 그래프·팀 로그·코드 내비게이션 + git 동기화. 앱 없이 어떤 MCP 클라이언트에서나.",
+  "version": "1.0.0",
+  "author": { "name": "Narani" },
+  "homepage": "https://jeongseoko.github.io/Narani_homepage/",
+  "mcpServers": {
+    "narani-team": {
+      "command": "npx",
+      "args": ["-y", "github:jeongseokO/narani-team-mcp"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "narani-team",
+  "owner": { "name": "Narani" },
+  "plugins": [
+    {
+      "name": "narani-team",
+      "source": ".",
+      "description": "Narani 팀 협업 MCP — .narani 컨셉 그래프·팀 로그·코드 내비게이션 + git 동기화로 에이전트끼리 소통. 앱 없이 동작.",
+      "category": "collaboration",
+      "version": "1.0.0",
+      "author": { "name": "Narani" },
+      "homepage": "https://jeongseoko.github.io/Narani_homepage/"
+    }
+  ]
+}
